@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "lodash": "^4.17.21",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0"
   },
@@ -24,5 +25,9 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^7.0.0",
     "prettier": "^2.2.1"
-  }
+  },
+  "description": "creation of a memory game with vueJS",
+  "main": "index.js",
+  "author": "elo-tnt1130 <elo.caille@gmail.com>",
+  "license": "MIT"
 }
