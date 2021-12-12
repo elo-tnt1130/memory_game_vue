@@ -16,12 +16,15 @@
     <br />
     <h2>{{ userSelection }}</h2>
     <h2>{{ status }}</h2>
+
+    <button @click="shuffleCards">Shuffle cards</button>
   </div>
 </template>
 
 <script>
 import { computed, ref, watch } from "vue";
 import Card from "../components/Card";
+import _ from "lodash";
 
 export default {
   name: "memoryCards",
@@ -33,13 +36,14 @@ export default {
     const cardList = ref([]);
     const status = computed(() => {
       if (remainingPairs.value === 0) {
-        return "Player wins!"
+        return "Player wins!";
       } else {
-        return `Remaining pairs: ${remainingPairs.value}`
+        return `Remaining pairs: ${remainingPairs.value}`;
       }
     });
 
     // remainingPairs uses computed of card.vue with a callback function
+    // en interne (transparent pour l'utilisateur)
     const remainingPairs = computed(() => {
       const remainingCards = cardList.value.filter(
         (card) => card.matched === false
@@ -48,11 +52,17 @@ export default {
       return remainingCards / 2;
     });
 
+    // add a shuffle method
+    const shuffleCards = () => {
+      cardList.value = _.shuffle(cardList.value);
+    };
+
     for (let i = 0; i < 16; i++) {
       cardList.value.push({
-        // value: i,
-        value: 8,
-        visible: false,
+        value: i,
+        // value: 8,
+        // visible: false,
+        visible: true,
         position: i,
         matched: false,
       });
@@ -98,6 +108,7 @@ export default {
       flipCard,
       userSelection,
       status,
+      shuffleCards,
     };
   },
 };
