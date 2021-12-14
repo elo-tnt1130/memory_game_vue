@@ -111,8 +111,17 @@ export default {
 
     const flipCard = (payload) => {
       cardList.value[payload.position].visible = true;
+
       if (userSelection.value[0]) {
-        userSelection.value[1] = payload;
+        // avoid that a user could select twice the same card
+        if (
+          userSelection.value[0].position === payload.position &&
+          userSelection.value[0].faceValue === payload.faceValue
+        ) {
+          return;
+        } else {
+          userSelection.value[1] = payload;
+        }
       } else {
         userSelection.value[0] = payload;
       }
