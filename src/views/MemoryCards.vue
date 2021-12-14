@@ -75,17 +75,17 @@ export default {
     const cardItems = [1, 2, 3, 4, 5, 6, 7, 8];
 
     cardItems.forEach((item) => {
-      // Push each item, in cardItems rwice
+      // Push each item, in cardItems twice
       cardList.value.push({
         value: item,
-        visible: true,
+        visible: false,
         position: null,
         matched: false,
       });
 
       cardList.value.push({
         value: item,
-        visible: true,
+        visible: false,
         position: null,
         matched: false,
       });
@@ -132,8 +132,11 @@ export default {
             cardList.value[cardTwo.position].matched = true;
           } else {
             // status.value = "Mismatch !";
-            cardList.value[cardOne.position].visible = false;
-            cardList.value[cardTwo.position].visible = false;
+            // setTime to allow to see why it's false
+            setTimeout(() => {
+              cardList.value[cardOne.position].visible = false;
+              cardList.value[cardTwo.position].visible = false;
+            }, 2000);
           }
 
           userSelection.value.length = 0;
