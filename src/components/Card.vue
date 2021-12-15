@@ -89,10 +89,11 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* hide a face */
+  /* hide a face of a transformed element */
   backface-visibility: hidden;
 }
 .card-face.is-front {
+  /* flip the front of the card too */
   transform: rotateY(180deg);
 }
 
