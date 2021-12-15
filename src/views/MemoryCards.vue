@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid my-3">
+  <div class="container-fluid my-3" id="memory-game">
     <h1>Memory Cards Game</h1>
 
     <section class="game-board">
@@ -14,10 +14,12 @@
       />
     </section>
     <br />
-    <h2>{{ userSelection }}</h2>
+    <!-- <h2>{{ userSelection }}</h2> -->
     <h2>{{ status }}</h2>
 
-    <button @click="restartGame">Restart game</button>
+    <button @click="restartGame" class="btn btn-outline-info">
+      Restart game
+    </button>
   </div>
 </template>
 
@@ -72,7 +74,18 @@ export default {
     };
 
     //
-    const cardItems = [1, 2, 3, 4, 5, 6, 7, 8];
+    const cardItems = [
+      // "nature",
+      "african-desert",
+      "camping",
+      "nature2",
+      "winter",
+      "northern-lights",
+      // "spring-field",
+      "iced-lake",
+      "sunset-lake",
+      "usa-desert",
+    ];
 
     cardItems.forEach((item) => {
       // Push each item, in cardItems twice
@@ -174,14 +187,15 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 1rem;
+  height: 100vh;
 }
 
 .game-board {
   display: grid;
-  grid-template-columns: 100px 100px 100px 100px;
-  grid-template-rows: 100px 100px 100px 100px;
-  grid-column-gap: 30px;
-  grid-row-gap: 30px;
+  grid-template-columns: repeat(4, 180px);
+  grid-template-rows: repeat(4, 120px);
+  grid-column-gap: 24px;
+  grid-row-gap: 24px;
   justify-content: center;
 }
 </style>
