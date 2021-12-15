@@ -1,18 +1,20 @@
 <template>
   <div class="container-fluid my-3" id="memory-game">
-    <h1>Memory Cards Game</h1>
+    <h1 class="mb-3">Memory Cards Game</h1>
 
-    <section class="game-board">
+    <!-- transform the section in transition gropu and add a tag to allow animation for suffle cards -->
+    <transition-group tag="section" name="shuffle-cards" class="game-board">
+      <!-- unique key needed to allow to shuffle cards -->
       <Card
-        v-for="(card, index) in cardList"
-        :key="`card-${index}`"
+        v-for="card in cardList"
+        :key="`${card.value}-${card.variant}`"
         :matched="card.matched"
         :value="card.value"
         :visible="card.visible"
         :position="card.position"
         @select-card="flipCard"
       />
-    </section>
+    </transition-group>
     <br />
     <!-- <h2>{{ userSelection }}</h2> -->
     <h2>{{ status }}</h2>
@@ -91,6 +93,8 @@ export default {
       // Push each item, in cardItems twice
       cardList.value.push({
         value: item,
+        // add variant to create a unique key for suffle cards
+        variant: 1,
         visible: false,
         position: null,
         matched: false,
@@ -98,6 +102,7 @@ export default {
 
       cardList.value.push({
         value: item,
+        variant: 2,
         visible: false,
         position: null,
         matched: false,
@@ -197,5 +202,9 @@ export default {
   grid-column-gap: 24px;
   grid-row-gap: 24px;
   justify-content: center;
+}
+
+.shuffle-cards {
+  transition: transform 0.8s ease-in;
 }
 </style>
