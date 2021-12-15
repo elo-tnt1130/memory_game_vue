@@ -1,6 +1,7 @@
 <template>
-  <div class="card" @click="selectCard">
-    <div v-if="visible" class="card-face is-front">
+  <div class="card" :class="flippedStyles" @click="selectCard">
+    <!-- delete the v-if which recreate the div each time  -->
+    <div class="card-face is-front">
       <img
         :src="`/images/${value}.jpg`"
         :alt="value"
@@ -13,7 +14,7 @@
         class="checkmark w-25 me-1 mb-1"
       />
     </div>
-    <div v-else class="card-face is-back">
+    <div class="card-face is-back">
       <img
         src="../../public/images/galaxy.jpg"
         alt="back of the card"
@@ -24,6 +25,8 @@
 </template>
 
 <script>
+import { computed } from "vue";
+
 export default {
   props: {
     // avec la fonction setup et le selectCard
@@ -46,29 +49,51 @@ export default {
   },
 
   setup(props, context) {
+    // add a flipping animation
+    const flippedStyles = computed(() => {
+      if (props.visible) {
+        return "is-flipped";
+      } else {
+        return "";
+      }
+    });
+
     const selectCard = () => {
       context.emit("select-card", {
         position: props.position,
         faceValue: props.value,
       });
     };
-    return { selectCard };
+    return { selectCard, flippedStyles };
   },
 };
 </script>
 
 <style scoped>
-/* .card {
-  border: 5px solid #ccc;
-} */
+.card {
+  position: relative;
+  /* set the time of transition */
+  transition: 0.5s transform ease-in;
+  /* to keep a 3D effect on the rotation */
+  transform-style: preserve-3d;
+}
+.card.is-flipped {
+  /* rotate the card on the vertical axis */
+  transform: rotateY(180deg);
+}
 
 .card-face {
   width: 100%;
   height: 100%;
-  position: relative;
+  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
+  /* hide a face */
+  backface-visibility: hidden;
+}
+.card-face.is-front {
+  transform: rotateY(180deg);
 }
 
 .card-face.is-back {
