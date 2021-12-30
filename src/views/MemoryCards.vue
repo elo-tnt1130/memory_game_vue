@@ -12,7 +12,7 @@
       </p>
     </section>
 
-    <!-- transform the section in transition gropu and add a tag to allow animation for suffle cards -->
+    <!-- transform the section in transition group and add a tag to allow animation for shuffle cards -->
     <transition-group tag="section" name="shuffle-cards" class="game-board">
       <!-- unique key needed to allow to shuffle cards -->
       <Card
@@ -25,6 +25,7 @@
         @select-card="flipCard"
       />
     </transition-group>
+
     <br />
     <!-- <h2>{{ userSelection }}</h2> -->
     <h2 class="text-info">{{ status }}</h2>
