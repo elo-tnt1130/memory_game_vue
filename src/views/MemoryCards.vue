@@ -2,6 +2,10 @@
   <div class="container-fluid my-3" id="memory-game">
     <h1 class="mb-3">Memory Cards Game</h1>
 
+    <section>
+      <p>A card matching game powered by Vue.js 3</p>
+    </section>
+
     <!-- transform the section in transition gropu and add a tag to allow animation for suffle cards -->
     <transition-group tag="section" name="shuffle-cards" class="game-board">
       <!-- unique key needed to allow to shuffle cards -->
@@ -19,7 +23,19 @@
     <!-- <h2>{{ userSelection }}</h2> -->
     <h2>{{ status }}</h2>
 
-    <button @click="restartGame" class="btn btn-outline-info">
+    <button
+      v-if="newPlayer"
+      @click="startGame"
+      class="mt-3 btn btn-outline-info px-4 py-3 restart"
+    >
+      Start game
+    </button>
+
+    <button
+      v-else
+      @click="restartGame"
+      class="mt-3 btn btn-outline-info px-4 py-3 restart"
+    >
       Restart game
     </button>
   </div>
@@ -40,6 +56,12 @@ export default {
   setup() {
     const userSelection = ref([]);
     const cardList = ref([]);
+    const newPlayer = ref(true);
+
+    const startGame = () => {
+      newPlayer.value = false;
+      restartGame();
+    };
 
     const status = computed(() => {
       if (remainingPairs.value === 0) {
@@ -182,11 +204,13 @@ export default {
     );
 
     return {
+      startGame,
+      newPlayer,
       cardList,
       flipCard,
       userSelection,
       status,
-      shuffleCards,
+      // shuffleCards,
       restartGame,
     };
   },
@@ -211,6 +235,11 @@ export default {
   grid-column-gap: 24px;
   grid-row-gap: 24px;
   justify-content: center;
+}
+
+p,
+.restart {
+  font-size: 1.25rem;
 }
 
 .shuffle-cards {
