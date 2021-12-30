@@ -1,9 +1,15 @@
 <template>
   <div class="container-fluid my-3" id="memory-game">
-    <h1 class="mb-3">Memory Cards Game</h1>
+    <h1 class="mb-3 text-warning">Memory Cards Game</h1>
 
-    <section>
-      <p>A card matching game powered by Vue.js 3</p>
+    <section class="mb-2 text-muted">
+      <p>
+        A card matching game powered by Vue.js 3
+        <br />
+        <span class="text-danger">
+          Click on "start the game" to begin to play !
+        </span>
+      </p>
     </section>
 
     <!-- transform the section in transition gropu and add a tag to allow animation for suffle cards -->
@@ -21,12 +27,12 @@
     </transition-group>
     <br />
     <!-- <h2>{{ userSelection }}</h2> -->
-    <h2>{{ status }}</h2>
+    <h2 class="text-info">{{ status }}</h2>
 
     <button
       v-if="newPlayer"
       @click="startGame"
-      class="mt-3 btn btn-outline-info px-4 py-3 restart"
+      class="mt-3 btn btn-outline-warning px-4 py-3 restart"
     >
       Start game
     </button>
@@ -63,6 +69,7 @@ export default {
       restartGame();
     };
 
+    // pour savoir où en est le jeu
     const status = computed(() => {
       if (remainingPairs.value === 0) {
         return "Player wins!";
@@ -100,7 +107,7 @@ export default {
       });
     };
 
-    //
+    //the images in the hidden side of cards
     const cardItems = [
       // "nature",
       "african-desert",
@@ -113,7 +120,6 @@ export default {
       "sunset-lake",
       "usa-desert",
     ];
-
     cardItems.forEach((item) => {
       // Push each item, in cardItems twice
       cardList.value.push({
@@ -152,6 +158,7 @@ export default {
     //   });
     // };
 
+    //to flip cards (only once)
     const flipCard = (payload) => {
       cardList.value[payload.position].visible = true;
 
@@ -170,20 +177,24 @@ export default {
       }
     };
 
+    //if the player ends the game, launch confetti
     watch(remainingPairs, (currentValue) => {
       if (currentValue === 0) {
         launchConfetti();
       }
     });
 
+    //to know if it's a matching pair or not
     watch(
       userSelection,
       (currentValue) => {
         console.log(currentValue);
+        // if the array counts 2 elements
         if (currentValue.length === 2) {
           const cardOne = currentValue[0];
           const cardTwo = currentValue[1];
 
+          //it compares them and gives the result
           if (cardOne.faceValue === cardTwo.faceValue) {
             // status.value = "Matched !";
             cardList.value[cardOne.position].matched = true;
@@ -203,6 +214,7 @@ export default {
       { deep: true }
     );
 
+    //to expose the const
     return {
       startGame,
       newPlayer,
@@ -210,7 +222,7 @@ export default {
       flipCard,
       userSelection,
       status,
-      // shuffleCards,
+      shuffleCards,
       restartGame,
     };
   },
